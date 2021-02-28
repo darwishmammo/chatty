@@ -57,3 +57,20 @@
 .align-items-center {
   align-items: center;
 }
+
+.width-200 {
+  width: 200px;
+}
+
+.height-200 {
+  height: 200px;
+}
+
+.img-fullsize * {
+  width: auto !important;
+  height: auto !important;
+}
+
+.font-huge {
+  font-size: 100px;
+}

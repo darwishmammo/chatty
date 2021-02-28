@@ -4,6 +4,7 @@ import { Modal, Button, Alert } from "rsuite";
 import AvatarEditor from "react-avatar-editor";
 import { useModalState } from "../customHooks";
 import { useProfile } from "../../context/profile.context";
+import ProfileAvatar from "../ProfileAvatar";
 
 const fileInputTypes = ".png, .jpeg, .jpg";
 
@@ -78,6 +79,11 @@ const AvatarUpload = () => {
 
   return (
     <div className="mt-3 text-center">
+      <ProfileAvatar
+        src={profile.avatar}
+        name={profile.name}
+        className="width-200 height-200 img-fullsize font-huge"
+      />
       <div>
         <label
           htmlFor="avatar-upload"
