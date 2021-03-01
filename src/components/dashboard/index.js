@@ -10,7 +10,7 @@ const Dashboard = ({ onSignOut }) => {
 
   const onSave = async (newData) => {
     const userNicknameRef = database
-      .ref(`/profiles/${profile.uid}`)
+      .ref(`/profile/${profile.uid}`)
       .child("name");
 
     try {
@@ -29,6 +29,7 @@ const Dashboard = ({ onSignOut }) => {
       </Drawer.Header>
       <Drawer.Body style={{ height: "80%" }}>
         <h3>Hello {profile.name}</h3>
+        <h6> {profile.email}</h6>
         <Divider />
         <StatefulInput
           name="nickname"
