@@ -2,11 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Loader } from "rsuite";
 import { useChats } from "../../context/chats.context";
-import { useContacts } from "../../context/contacts.context";
-import ContactItem from "./ContactItem";
+import ChatItem from "./ChatItem";
 
-const ContactsList = ({ aboveElHeight }) => {
-  const contacts = useContacts();
+const ChatsList = ({ aboveElHeight }) => {
   const chats = useChats();
 
   return (
@@ -19,18 +17,22 @@ const ContactsList = ({ aboveElHeight }) => {
         height: `calc(100% - ${aboveElHeight}px)`,
       }}
     >
-      {!contacts && (
+      {!chats && (
         <Loader center vertical content="Loading" speed="slow" size="md" />
       )}
-      {contacts &&
-        contacts.length > 0 &&
-        contacts.map((contact) => (
-          <Nav.Item componentClass={Link} to="/chats/someid" key={contact.id}>
-            <ContactItem contact={contact} />
+      {chats &&
+        chats.length > 0 &&
+        chats.map((chat) => (
+          <Nav.Item
+            componentClass={Link}
+            to={`/chats/${chat.id}`}
+            key={chat.id}
+          >
+            <ChatItem chat={chat} />
           </Nav.Item>
         ))}
     </Nav>
   );
 };
 
-export default ContactsList;
+export default ChatsList;

@@ -3,6 +3,8 @@ import ToggleDashboard from "./dashboard/ToggleDashboard";
 import AddContactToggle from "./AddContactToggle";
 import { Divider } from "rsuite";
 import ContactsList from "./contacts/ContactsList";
+import StartChatBtn from "./StartChatBtn";
+import ChatsList from "./chats/ChatsList";
 
 const Sidebar = () => {
   const topSidebarRef = useRef();
@@ -18,9 +20,11 @@ const Sidebar = () => {
       <div ref={topSidebarRef}>
         <ToggleDashboard />
         <AddContactToggle />
+        <StartChatBtn />
         <Divider>Contacts List</Divider>
       </div>
-      <ContactsList aboveElHeight={height} />
+      {/* <ContactsList aboveElHeight={height} /> */}
+      <ChatsList aboveElHeight={height} />
     </div>
   );
 };

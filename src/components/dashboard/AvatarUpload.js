@@ -54,7 +54,7 @@ const AvatarUpload = () => {
       const blob = await getBlob(canvas);
 
       const avatarFileRef = storage
-        .ref(`/profile/${profile.uid}`)
+        .ref(`/profiles/${profile.uid}`)
         .child("avatar");
 
       const uploadAvatarResult = await avatarFileRef.put(blob, {

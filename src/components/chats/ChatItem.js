@@ -1,12 +1,13 @@
 import React from "react";
-//import TimeAgo from 'timeago-react';
+import { useProfile } from "../../context/profile.context";
 
-const ContactItem = ({ contact }) => {
-  const { name } = contact;
+const ChatItem = ({ chat }) => {
+  const { profile } = useProfile();
+  const recipient = chat.members.filter((m) => m != profile.email);
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="text-disappear">{name}</h3>
+        <h3 className="text-disappear">{recipient[0]}</h3>
         {/* <TimeAgo datetime={new Date()} className="font-normal text-black-45" /> */}
       </div>
 
@@ -17,4 +18,4 @@ const ContactItem = ({ contact }) => {
   );
 };
 
-export default ContactItem;
+export default ChatItem;

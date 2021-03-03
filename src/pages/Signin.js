@@ -10,10 +10,10 @@ const Signin = () => {
         new firebase.auth.GoogleAuthProvider()
       );
       if (additionalUserInfo.isNewUser) {
-        console.log("is new user");
         await database.ref(`/profiles/${user.uid}`).set({
           name: user.displayName,
           createdAt: firebase.database.ServerValue.TIMESTAMP,
+          email: user.email,
         });
       }
       Alert.success("Signed in successfully!", 4000);
