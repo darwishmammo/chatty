@@ -17,7 +17,6 @@ export const ChatsProvider = ({ children }) => {
       const myChats = data.filter(
         (c) => c.members[0] == profile.email || c.members[1] == profile.email
       );
-      console.log(myChats);
       setChats(myChats);
     });
 

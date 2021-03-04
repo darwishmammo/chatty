@@ -21,7 +21,7 @@ const Sidebar = () => {
         <ToggleDashboard />
         <AddContactToggle />
         <StartChatBtn />
-        <Divider>Contacts List</Divider>
+        <Divider>Chats List</Divider>
       </div>
       {/* <ContactsList aboveElHeight={height} /> */}
       <ChatsList aboveElHeight={height} />

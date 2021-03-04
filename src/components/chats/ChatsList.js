@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Nav, Loader } from "rsuite";
 import { useChats } from "../../context/chats.context";
 import ChatItem from "./ChatItem";
 
 const ChatsList = ({ aboveElHeight }) => {
   const chats = useChats();
+  const location = useLocation();
 
   return (
     <Nav
@@ -16,6 +17,7 @@ const ChatsList = ({ aboveElHeight }) => {
       style={{
         height: `calc(100% - ${aboveElHeight}px)`,
       }}
+      activeKey={location.pathname}
     >
       {!chats && (
         <Loader center vertical content="Loading" speed="slow" size="md" />
@@ -27,6 +29,7 @@ const ChatsList = ({ aboveElHeight }) => {
             componentClass={Link}
             to={`/chats/${chat.id}`}
             key={chat.id}
+            eventKey={`/chats/${chat.id}`}
           >
             <ChatItem chat={chat} />
           </Nav.Item>

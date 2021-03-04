@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Button, Icon, Modal, SelectPicker } from "rsuite";
+import firebase from "firebase/app";
 import { useContacts } from "../context/contacts.context";
 import { useProfile } from "../context/profile.context";
 import { database } from "../firebase";
@@ -22,7 +23,10 @@ const StartChatBtn = () => {
     }
     //query if chat already exist, then forward, otherwise create new chat
     const chatsRef = database.ref("chats");
-    const chat = { members: [recipient, profile.email] };
+    const chat = {
+      members: [recipient, profile.email],
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
+    };
     chatsRef.push(chat);
     close();
   };
