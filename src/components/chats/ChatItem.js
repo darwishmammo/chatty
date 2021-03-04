@@ -4,7 +4,7 @@ import TimeAgo from "timeago-react";
 
 const ChatItem = ({ chat }) => {
   const { profile } = useProfile();
-  const recipient = chat.members.filter((m) => m != profile.email);
+  const recipient = chat.members.filter((m) => m !== profile.email);
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">

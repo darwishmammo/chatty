@@ -15,7 +15,7 @@ export const ChatsProvider = ({ children }) => {
     chatListRef.on("value", (snap) => {
       const data = chatsToArr(snap.val());
       const myChats = data.filter(
-        (c) => c.members[0] == profile.email || c.members[1] == profile.email
+        (c) => c.members[0] === profile.email || c.members[1] === profile.email
       );
       setChats(myChats);
     });
@@ -23,7 +23,7 @@ export const ChatsProvider = ({ children }) => {
     return () => {
       chatListRef.off();
     };
-  }, []);
+  }, [profile.email]);
 
   return (
     <ChatsContext.Provider value={chats}>{children}</ChatsContext.Provider>

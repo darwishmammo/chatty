@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   Button,
   Icon,
@@ -34,7 +34,7 @@ const INITIAL_FORM = {
 const AddContactToggle = () => {
   const { isOpen, open, close } = useModalState();
   const { profile } = useProfile();
-  const [profiles, setProfiles] = useState(null);
+
   const [formValue, setFormValue] = useState(INITIAL_FORM);
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef();
@@ -70,11 +70,6 @@ const AddContactToggle = () => {
       Alert.error(err.message, 4000);
     }
   };
-
-  useEffect(() => {
-    const allProfiles = database.ref("profiles");
-    allProfiles.on("value", (snap) => console.log(snap.val()));
-  }, []);
 
   return (
     <div className="mt-1">

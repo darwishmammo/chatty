@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Loader } from "rsuite";
-import { useChats } from "../../context/chats.context";
 import { useContacts } from "../../context/contacts.context";
 import ContactItem from "./ContactItem";
 
 const ContactsList = ({ aboveElHeight }) => {
   const contacts = useContacts();
-  const chats = useChats();
 
   return (
     <Nav

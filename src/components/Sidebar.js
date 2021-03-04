@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ToggleDashboard from "./dashboard/ToggleDashboard";
 import AddContactToggle from "./AddContactToggle";
 import { Divider } from "rsuite";
-import ContactsList from "./contacts/ContactsList";
+// import ContactsList from "./contacts/ContactsList";
 import StartChatBtn from "./StartChatBtn";
 import ChatsList from "./chats/ChatsList";
 
