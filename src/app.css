@@ -134,3 +134,56 @@
 .chat-middle {
   height: calc(100% - 75px - 65px);
 }
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+.text-green {
+  color: #4caf50;
+}
+
+.text-blue {
+  color: #2196f3 !important;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-black-45 {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.text-black-70 {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.bg-black-02 {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.link-unstyled,
+.link-unstyled:visited,
+.link-unstyled:hover,
+.link-unstyled:active,
+.link-unstyled:focus,
+.link-unstyled:active:hover {
+  text-decoration: none;
+}
+
+.ws-nowrap {
+  white-space: nowrap;
+}

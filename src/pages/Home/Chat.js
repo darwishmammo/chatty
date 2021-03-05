@@ -6,10 +6,12 @@ import { useParams } from "react-router";
 import { useChats } from "../../context/chats.context";
 import { Loader } from "rsuite";
 import { CurrentChatProvider } from "../../context/current-chat.context";
+import { useProfile } from "../../context/profile.context";
 
 const Chat = () => {
   const { chatId } = useParams();
   const chats = useChats();
+  const { profile } = useProfile();
 
   if (!chats) {
     return <Loader center vertical size="md" content="Loading" speed="slow" />;
@@ -22,10 +24,11 @@ const Chat = () => {
   }
 
   const { createdAt, members } = currentChat;
+  const recipient = members.filter((m) => m !== profile.email)[0];
 
   const currentChatData = {
     createdAt,
-    members,
+    recipient,
   };
 
   return (

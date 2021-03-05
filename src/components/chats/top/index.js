@@ -1,14 +1,41 @@
 import React, { memo } from "react";
+import { Link } from "react-router-dom";
+import { Icon, ButtonToolbar } from "rsuite";
 import { useCurrentChat } from "../../../context/current-chat.context";
-import { useProfile } from "../../../context/profile.context";
+import { useMediaQuery } from "../../customHooks";
+import ContactInfoBtnModal from "./ContactInfoBtnModal";
 
 const Top = () => {
-  const members = useCurrentChat((v) => v.members);
-  const { profile } = useProfile();
+  const recipient = useCurrentChat((v) => v.recipient);
+  const isMobile = useMediaQuery("(max-width: 992px)");
 
-  const recipint = members.filter((m) => m !== profile.email)[0];
+  return (
+    <div>
+      <div className="d-flex justify-content-between align-items-center">
+        <h4 className="text-disappear d-flex align-items-center">
+          <Icon
+            componentClass={Link}
+            to="/"
+            icon="arrow-circle-left"
+            size="2x"
+            className={
+              isMobile
+                ? "d-inline-block p-0 mr-2 text-blue link-unstyled"
+                : "d-none"
+            }
+          />
+          <span className="text-disappear">{recipient}</span>
+        </h4>
 
-  return <div>{recipint}</div>;
+        <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar>
+      </div>
+
+      <div className="d-flex justify-content-between align-items-center">
+        <span>todo</span>
+        {/* <ContactInfoBtnModal /> */}
+      </div>
+    </div>
+  );
 };
 
 export default memo(Top);
