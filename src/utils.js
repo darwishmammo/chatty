@@ -31,3 +31,33 @@ export function chatsToArr(snapVal) {
       })
     : [];
 }
+
+export async function getUserUpdates(userId, keyToUpdate, value, db) {
+  const updates = {};
+
+  updates[`/profiles/${userId}/${keyToUpdate}`] = value;
+
+  const getMsgs = db
+    .ref("/messages")
+    .orderByChild("author/uid")
+    .equalTo(userId)
+    .once("value");
+
+  const getChat = db
+    .ref("/chats")
+    .orderByChild("lastMessage/author/uid")
+    .equalTo(userId)
+    .once("value");
+
+  const [messagesSnap, chatsSnap] = await Promise.all([getMsgs, getChat]);
+
+  messagesSnap.forEach((msgSnap) => {
+    updates[`/messages/${msgSnap.key}/author/${keyToUpdate}`] = value;
+  });
+
+  chatsSnap.forEach((chatSnap) => {
+    updates[`/chats/${chatSnap.key}/lastMessage/author/${keyToUpdate}`] = value;
+  });
+
+  return updates;
+}

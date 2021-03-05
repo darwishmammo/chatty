@@ -136,7 +136,7 @@
 }
 
 .chat-middle {
-  height: calc(100% - 75px - 65px);
+  height: calc(100vh - 75px - 65px);
 }
 
 .d-inline-block {

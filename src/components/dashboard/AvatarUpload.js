@@ -5,6 +5,7 @@ import AvatarEditor from "react-avatar-editor";
 import { useModalState } from "../customHooks";
 import { useProfile } from "../../context/profile.context";
 import ProfileAvatar from "../ProfileAvatar";
+import { getUserUpdates } from "../../utils";
 
 const fileInputTypes = ".png, .jpeg, .jpg";
 
@@ -63,11 +64,19 @@ const AvatarUpload = () => {
 
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
 
-      const userAvatarRef = database
-        .ref(`/profiles/${profile.uid}`)
-        .child("avatar");
+      // const userAvatarRef = database
+      //   .ref(`/profiles/${profile.uid}`)
+      //   .child("avatar");
 
-      userAvatarRef.set(downloadUrl);
+      const updates = await getUserUpdates(
+        profile.uid,
+        "avatar",
+        downloadUrl,
+        database
+      );
+
+      // userAvatarRef.set(downloadUrl);
+      await database.ref().update(updates);
 
       setIsLoading(false);
       close();
