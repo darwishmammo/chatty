@@ -5,30 +5,51 @@ import { useContacts } from "../context/contacts.context";
 import { useProfile } from "../context/profile.context";
 import { database } from "../firebase";
 import { useModalState } from "./customHooks";
+import { useChats } from "../context/chats.context";
+import { Redirect, useHistory } from "react-router";
 
 const StartChatBtn = () => {
   const contacts = useContacts();
   const { isOpen, open, close } = useModalState();
   const [recipient, setRecipient] = useState("");
   const { profile } = useProfile();
+  const chats = useChats();
+  let history = useHistory();
 
   const handleChange = (value) => {
     setRecipient(value);
   };
 
-  const onStart = () => {
+  const onStart = async () => {
     if (recipient === "") {
       Alert.warning("Please Select a Contact to Start a Chat");
       return;
     }
-    //query if chat already exist, then forward, otherwise create new chat
-    const chatsRef = database.ref("chats");
-    const chat = {
-      members: [recipient, profile.email],
-      createdAt: firebase.database.ServerValue.TIMESTAMP,
-    };
-    chatsRef.push(chat);
-    close();
+
+    const hasChattedBefore = chats.filter((c) =>
+      c.members.find((m) => m === recipient)
+    )[0];
+
+    if (hasChattedBefore) {
+      setRecipient("");
+      close();
+      console.log(`/chats/${hasChattedBefore.id}`);
+      // return <Redirect to={`/chats/${hasChattedBefore.id}`} />;
+      history.push(`/chats/${hasChattedBefore.id}`);
+    } else {
+      const updates = {};
+      const chat = {
+        members: [recipient, profile.email],
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
+      };
+
+      const chatId = database.ref("chats").push().key;
+      updates[`/chats/${chatId}`] = chat;
+      await database.ref().update(updates);
+      close();
+      // return <Redirect to={`/chats/${chatId}`} />;
+      history.push(`/chats/${chatId}`);
+    }
   };
   return (
     <div className="mt-1">
