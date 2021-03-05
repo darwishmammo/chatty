@@ -10,12 +10,7 @@ const Dashboard = ({ onSignOut }) => {
   const { profile } = useProfile();
 
   const onSave = async (newData) => {
-    // const userNicknameRef = database
-    //   .ref(`/profiles/${profile.uid}`)
-    //   .child("name");
-
     try {
-      // await userNicknameRef.set(newData);
       const updates = await getUserUpdates(
         profile.uid,
         "name",

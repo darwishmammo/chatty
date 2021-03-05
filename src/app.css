@@ -34,6 +34,10 @@
   margin-bottom: 15px;
 }
 
+.ml-1 {
+  margin-left: 5px;
+}
+
 .ml-2 {
   margin-left: 10px;
 }
@@ -190,4 +194,24 @@
 
 .ws-nowrap {
   white-space: nowrap;
+}
+
+.font-bolder {
+  font-weight: 500;
+}
+
+.word-break-all {
+  word-break: break-all;
+}
+
+.msg-list {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow-y: auto;
+  list-style-type: none;
+}
+.msg-list li:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }

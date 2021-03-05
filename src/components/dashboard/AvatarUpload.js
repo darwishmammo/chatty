@@ -64,10 +64,6 @@ const AvatarUpload = () => {
 
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
 
-      // const userAvatarRef = database
-      //   .ref(`/profiles/${profile.uid}`)
-      //   .child("avatar");
-
       const updates = await getUserUpdates(
         profile.uid,
         "avatar",
@@ -75,7 +71,6 @@ const AvatarUpload = () => {
         database
       );
 
-      // userAvatarRef.set(downloadUrl);
       await database.ref().update(updates);
 
       setIsLoading(false);
