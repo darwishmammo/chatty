@@ -26,6 +26,13 @@
       "$message_id": {
         ".read": "auth !== null",
         ".write": "auth !== null"
+      },
+      ".indexOn": "chatId"
+    },
+    "status": {
+      "$user_id": {
+        ".read": "auth !== null",
+        ".write": "$user_id === auth.uid"
       }
     },
     ".read": false,

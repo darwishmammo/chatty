@@ -6,7 +6,7 @@ import { useProfile } from "../context/profile.context";
 import { database } from "../firebase";
 import { useModalState } from "./customHooks";
 import { useChats } from "../context/chats.context";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 
 const StartChatBtn = () => {
   const contacts = useContacts();
@@ -34,7 +34,6 @@ const StartChatBtn = () => {
       setRecipient("");
       close();
       console.log(`/chats/${hasChattedBefore.id}`);
-      // return <Redirect to={`/chats/${hasChattedBefore.id}`} />;
       history.push(`/chats/${hasChattedBefore.id}`);
     } else {
       const updates = {};
@@ -46,11 +45,12 @@ const StartChatBtn = () => {
       const chatId = database.ref("chats").push().key;
       updates[`/chats/${chatId}`] = chat;
       await database.ref().update(updates);
+      setRecipient("");
       close();
-      // return <Redirect to={`/chats/${chatId}`} />;
       history.push(`/chats/${chatId}`);
     }
   };
+
   return (
     <div className="mt-1">
       <Button block color="green" onClick={open}>
