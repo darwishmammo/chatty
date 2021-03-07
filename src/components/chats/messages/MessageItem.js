@@ -1,13 +1,23 @@
-import React from "react";
+import React, { memo } from "react";
 import TimeAgo from "timeago-react";
+import { auth } from "../../../firebase";
+import { useHover, useMediaQuery } from "../../customHooks";
 import OnlineStatus from "../../OnlineStatus";
 import ProfileAvatar from "../../ProfileAvatar";
+import IconControlBtn from "./IconControlBtn";
 
-const MessageItem = ({ message }) => {
+const MessageItem = ({ message, handleDelete }) => {
   const { author, createdAt, text } = message;
+  const isMobile = useMediaQuery("(max-width: 992px)");
+  const [selfRef, isHovered] = useHover();
+  const isAuthor = auth.currentUser.uid === author.uid;
+  const canShowIcons = isMobile || isHovered;
 
   return (
-    <li className="padded mb-1">
+    <li
+      className={`padded mb-1 cursor-pointer ${isHovered ? "bg-black-02" : ""}`}
+      ref={selfRef}
+    >
       <div className="d-flex align-items-center font-bolder mb-1">
         <OnlineStatus uid={author.uid} />
         <ProfileAvatar
@@ -22,8 +32,15 @@ const MessageItem = ({ message }) => {
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
         />
+        {isAuthor && (
+          <IconControlBtn
+            isVisible={canShowIcons}
+            iconName="close"
+            tooltip="Delete message"
+            onClick={() => handleDelete(message.id)}
+          />
+        )}
       </div>
-
       <div>
         <span className="word-break-all">{text}</span>
       </div>
@@ -31,4 +48,4 @@ const MessageItem = ({ message }) => {
   );
 };
 
-export default MessageItem;
+export default memo(MessageItem);

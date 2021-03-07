@@ -21,12 +21,12 @@ export function transformToArrWithId(snapVal) {
     : [];
 }
 
-export function chatsToArr(snapVal) {
+export function toArrWithId(snapVal) {
   return snapVal
-    ? Object.keys(snapVal).map((chatId) => {
+    ? Object.keys(snapVal).map((id) => {
         return {
-          ...snapVal[chatId],
-          id: chatId,
+          ...snapVal[id],
+          id: id,
         };
       })
     : [];
