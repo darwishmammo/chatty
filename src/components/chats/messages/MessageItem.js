@@ -5,9 +5,22 @@ import { useHover, useMediaQuery } from "../../customHooks";
 import OnlineStatus from "../../OnlineStatus";
 import ProfileAvatar from "../../ProfileAvatar";
 import IconControlBtn from "./IconControlBtn";
+import ImageModalBtn from "./ImageModalBtn";
+
+const displayFileMessage = (file) => {
+  if (file.contentType.includes("image")) {
+    return (
+      <div className="height-220">
+        <ImageModalBtn src={file.url} fileName={file.name} />
+      </div>
+    );
+  }
+
+  return <a href={file.url}>Download {file.name}</a>;
+};
 
 const MessageItem = ({ message, handleDelete }) => {
-  const { author, createdAt, text } = message;
+  const { author, createdAt, text, file } = message;
   const isMobile = useMediaQuery("(max-width: 992px)");
   const [selfRef, isHovered] = useHover();
   const isAuthor = auth.currentUser.uid === author.uid;
@@ -42,7 +55,8 @@ const MessageItem = ({ message, handleDelete }) => {
         )}
       </div>
       <div>
-        <span className="word-break-all">{text}</span>
+        {text && <span className="word-break-all">{text}</span>}
+        {file && displayFileMessage(file)}
       </div>
     </li>
   );
