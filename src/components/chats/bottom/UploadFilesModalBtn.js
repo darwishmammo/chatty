@@ -21,7 +21,7 @@ const UploadFilesModalBtn = ({ afterUpload }) => {
   };
 
   const onUpload = async () => {
-    if (fileList == []) {
+    if (fileList.length === 0) {
       Alert.warning("Please select at least one file to send", 3000);
       return;
     }
@@ -45,6 +45,7 @@ const UploadFilesModalBtn = ({ afterUpload }) => {
       });
       const files = await Promise.all(shapePromises);
       await afterUpload(files);
+      setFileList([]);
       setIsLoading(false);
       close();
     } catch (err) {

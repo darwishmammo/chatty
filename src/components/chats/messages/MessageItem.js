@@ -28,10 +28,16 @@ const MessageItem = ({ message, handleDelete }) => {
 
   return (
     <li
-      className={`padded mb-1 cursor-pointer ${isHovered ? "bg-black-02" : ""}`}
+      className={`padded mb-1 cursor-pointer ${
+        isHovered ? "bg-black-02" : ""
+      } ${isAuthor ? "to-right" : ""}`}
       ref={selfRef}
     >
-      <div className="d-flex align-items-center font-bolder mb-1">
+      <div
+        className={`d-flex align-items-center font-bolder mb-1 ${
+          isAuthor ? "flip-direction" : ""
+        } `}
+      >
         <OnlineStatus uid={author.uid} />
         <ProfileAvatar
           src={author.avatar}
@@ -55,7 +61,7 @@ const MessageItem = ({ message, handleDelete }) => {
         )}
       </div>
       <div>
-        {text && <span className="word-break-all">{text}</span>}
+        {text && <span className="word-break-all bubble">{text}</span>}
         {file && displayFileMessage(file)}
       </div>
     </li>

@@ -33,7 +33,6 @@ const StartChatBtn = () => {
     if (hasChattedBefore) {
       setRecipient("");
       close();
-      console.log(`/chats/${hasChattedBefore.id}`);
       history.push(`/chats/${hasChattedBefore.id}`);
     } else {
       const updates = {};

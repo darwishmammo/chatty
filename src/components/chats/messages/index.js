@@ -20,8 +20,6 @@ const Messages = () => {
       .equalTo(chatId)
       .on("value", (snap) => {
         const data = toArrWithId(snap.val());
-        console.log(data);
-
         setMessages(data);
       });
 

@@ -27,11 +27,11 @@ const Top = () => {
           <span className="text-disappear">{recipient}</span>
         </h4>
 
-        <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar>
+        {/* <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar> */}
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
-        <span>todo</span>
+        {/* <span>todo</span> */}
         {/* <ContactInfoBtnModal /> */}
       </div>
     </div>

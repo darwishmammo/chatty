@@ -200,9 +200,9 @@
   font-weight: 500;
 }
 
-.word-break-all {
+/* .word-break-all {
   word-break: break-all;
-}
+} */
 
 .msg-list {
   padding: 0;
@@ -230,4 +230,28 @@
 
 .height-220 {
   height: 220px;
+}
+
+.to-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.flip-direction {
+  flex-direction: row-reverse;
+}
+
+.flip-direction div {
+  margin-left: 5px;
+}
+
+.bubble {
+  font-size: large;
+  color: darkblue;
+  background-color: powderblue;
+  padding: 8px;
+  border-radius: 8px;
+  display: block;
+  max-width: 50rem;
 }
