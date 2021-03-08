@@ -61,3 +61,17 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   return updates;
 }
+
+export function groupByDate(array, groupingCallback) {
+  return array.reduce((result, item) => {
+    const key = groupingCallback(item);
+
+    if (!result[key]) {
+      result[key] = [];
+    }
+
+    result[key].push(item);
+
+    return result;
+  }, {});
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
 import { Alert } from "rsuite";
 import { database } from "../../../firebase";
-import { toArrWithId } from "../../../utils";
+import { groupByDate, toArrWithId } from "../../../utils";
 import MessageItem from "./MessageItem";
 
 const Messages = () => {
@@ -55,13 +55,34 @@ const Messages = () => {
     [chatId, messages]
   );
 
+  const displayMessages = () => {
+    const groups = groupByDate(messages, (msg) =>
+      new Date(msg.createdAt).toDateString()
+    );
+
+    const groupedMessages = [];
+
+    Object.keys(groups).forEach((date) => {
+      groupedMessages.push(
+        <li key={date} className="text-center mb-1 padded">
+          {date}
+        </li>
+      );
+
+      const msgs = groups[date].map((msg) => (
+        <MessageItem key={msg.id} message={msg} handleDelete={handleDelete} />
+      ));
+
+      groupedMessages.push(...msgs);
+    });
+
+    return groupedMessages;
+  };
+
   return (
     <ul className="msg-list custom-scroll">
       {isChatEmpty && <li>No messages yet</li>}
-      {canShowMessages &&
-        messages.map((msg) => (
-          <MessageItem key={msg.id} message={msg} handleDelete={handleDelete} />
-        ))}
+      {canShowMessages && displayMessages()}
     </ul>
   );
 };
