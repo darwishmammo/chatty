@@ -1,32 +1,76 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "react-router";
-import { Alert } from "rsuite";
+import { Alert, Button } from "rsuite";
 import { database } from "../../../firebase";
 import { groupByDate, toArrWithId } from "../../../utils";
 import MessageItem from "./MessageItem";
 
+const INITIAL_PAGE_SIZE = 15;
+const messagesRef = database.ref("/messages");
+
+function shouldScrollToBottom(node, threshold = 30) {
+  const percentage =
+    (100 * node.scrollTop) / (node.scrollHeight - node.clientHeight) || 0;
+
+  return percentage > threshold;
+}
+
 const Messages = () => {
   const { chatId } = useParams();
   const [messages, setMessages] = useState(null);
+  const [limit, setLimit] = useState(INITIAL_PAGE_SIZE);
+  const selfRef = useRef();
 
   const isChatEmpty = messages && messages.length === 0;
   const canShowMessages = messages && messages.length > 0;
 
-  useEffect(() => {
-    const messagesRef = database.ref("/messages");
+  const loadMessages = useCallback(
+    (limitToLast) => {
+      const node = selfRef.current;
+      messagesRef.off();
+      messagesRef
+        .orderByChild("chatId")
+        .equalTo(chatId)
+        .limitToLast(limitToLast || INITIAL_PAGE_SIZE)
+        .on("value", (snap) => {
+          const data = toArrWithId(snap.val());
+          setMessages(data);
 
-    messagesRef
-      .orderByChild("chatId")
-      .equalTo(chatId)
-      .on("value", (snap) => {
-        const data = toArrWithId(snap.val());
-        setMessages(data);
-      });
+          if (shouldScrollToBottom(node)) {
+            node.scrollTop = node.scrollHeight;
+          }
+        });
+
+      setLimit((current) => current + INITIAL_PAGE_SIZE);
+    },
+    [chatId]
+  );
+
+  const loadMoreMessages = useCallback(() => {
+    const node = selfRef.current;
+    const oldHeight = node.scrollHeight;
+
+    loadMessages(limit);
+
+    setTimeout(() => {
+      const newHeight = node.scrollHeight;
+      node.scrollTop = newHeight - oldHeight;
+    }, 250);
+  }, [loadMessages, limit]);
+
+  useEffect(() => {
+    const node = selfRef.current;
+
+    loadMessages();
+
+    setTimeout(() => {
+      node.scrollTop = node.scrollHeight;
+    }, 250);
 
     return () => {
       messagesRef.off("value");
     };
-  }, [chatId]);
+  }, [loadMessages]);
 
   const handleDelete = useCallback(
     async (msgId) => {
@@ -80,7 +124,14 @@ const Messages = () => {
   };
 
   return (
-    <ul className="msg-list custom-scroll">
+    <ul ref={selfRef} className="msg-list custom-scroll">
+      {messages && messages.length >= INITIAL_PAGE_SIZE && (
+        <li className="text-center mt-2 mb-2">
+          <Button onClick={loadMoreMessages} color="green">
+            Load more
+          </Button>
+        </li>
+      )}
       {isChatEmpty && <li>No messages yet</li>}
       {canShowMessages && displayMessages()}
     </ul>
