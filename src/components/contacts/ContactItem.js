@@ -2,15 +2,26 @@ import React from "react";
 import { Button, FlexboxGrid, Icon } from "rsuite";
 import { useProfile } from "../../context/profile.context";
 import { database } from "../../firebase";
+import { useModalState } from "../customHooks";
+import EditContactModal from "./EditContactModal";
 //import TimeAgo from 'timeago-react';
 
 const ContactItem = ({ contact }) => {
   const { name, phone, email, createdAt, id, address } = contact;
   const { profile } = useProfile();
+  const { isOpen, close, open } = useModalState();
 
   const handleDelete = () => {
     if (!window.confirm(`Are you sure you want to delete ${name}`)) return;
     database.ref(`contacts/${profile.uid}`).child(id).set(null);
+  };
+
+  const showEditForm = () => {
+    open();
+  };
+
+  const onHide = () => {
+    close();
   };
 
   return (
@@ -35,7 +46,7 @@ const ContactItem = ({ contact }) => {
       </FlexboxGrid.Item>
       <FlexboxGrid.Item>
         <div>
-          <Button block color="green">
+          <Button block color="green" onClick={showEditForm}>
             <Icon icon="edit" /> edit
           </Button>
         </div>
@@ -44,6 +55,7 @@ const ContactItem = ({ contact }) => {
             <Icon icon="trash" /> delete
           </Button>
         </div>
+        <EditContactModal isOpen={isOpen} onHide={onHide} id={id} />
       </FlexboxGrid.Item>
     </FlexboxGrid>
   );

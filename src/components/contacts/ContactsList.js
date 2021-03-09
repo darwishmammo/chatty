@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Nav, Loader, Modal, List } from "rsuite";
+import { Loader, Modal, List } from "rsuite";
 import { useContacts } from "../../context/contacts.context";
 import ContactItem from "./ContactItem";
 
