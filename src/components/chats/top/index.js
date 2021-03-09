@@ -1,9 +1,8 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { Icon, ButtonToolbar } from "rsuite";
+import { Icon } from "rsuite";
 import { useCurrentChat } from "../../../context/current-chat.context";
 import { useMediaQuery } from "../../customHooks";
-import ContactInfoBtnModal from "./ContactInfoBtnModal";
 
 const Top = () => {
   const recipient = useCurrentChat((v) => v.recipient);
@@ -26,13 +25,6 @@ const Top = () => {
           />
           <span className="text-disappear">{recipient}</span>
         </h4>
-
-        {/* <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar> */}
-      </div>
-
-      <div className="d-flex justify-content-between align-items-center">
-        {/* <span>todo</span> */}
-        {/* <ContactInfoBtnModal /> */}
       </div>
     </div>
   );

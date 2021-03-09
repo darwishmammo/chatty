@@ -49,7 +49,7 @@ const AddContactToggle = () => {
     }
 
     setIsLoading(true);
-
+    formValue.email = formValue.email.toLowerCase();
     const contactData = {
       ...formValue,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
